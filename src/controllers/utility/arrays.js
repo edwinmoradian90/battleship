@@ -1,4 +1,12 @@
-const matchingArrays = (arrayOne, arrayTwo) => {
+const generator = (start, end) => {
+    let newArray = [];
+    for(let i=start; i<end; i++) {
+        newArray.push(i);
+    };
+    return newArray;
+};
+
+const match = (arrayOne, arrayTwo) => {
     // Checks array length first
     if(arrayOne.length !== arrayTwo.length) return false;
     // Compares arrays
@@ -9,4 +17,10 @@ const matchingArrays = (arrayOne, arrayTwo) => {
     return true;
 };
 
-module.exports = matchingArrays;
+const rng = () => Math.round(Math.random() * 9);
+
+module.exports = {
+    generator,
+    match,
+    rng,
+};

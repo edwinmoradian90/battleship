@@ -1,11 +1,11 @@
-const arrayMatch = require('../utility/arrays');
+const arrays = require('../utility/arrays');
 
 const shipFactory = (length) => {
     let _hits = [];
     let _length = length;
     let _location = '';
     const hit = (hitLocation) => {
-        if(arrayMatch(hitLocation, _location)) { 
+        if(arrays.match(hitLocation, _location)) { 
             _hits.push(hitLocation);
             return true;
         }; 
