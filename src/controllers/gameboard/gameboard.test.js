@@ -24,6 +24,5 @@ test('receives attack, check for miss', () => {
 });
 
 test('checks if all ships sunk', () => {
-    console.log(ship.isSunk())
     expect(gameboard.allSunk()).toBe(true);
 });
