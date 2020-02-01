@@ -86,14 +86,36 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/controllers/ship/ship.js":
+/*!**************************************!*\
+  !*** ./src/controllers/ship/ship.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const arrayMatch = __webpack_require__(/*! ../utility/arrays */ \"./src/controllers/utility/arrays.js\");\r\n\r\nconst shipFactory = (length) => {\r\n    let _hits = [];\r\n    let _length = length;\r\n    let _location = '';\r\n    const hit = (hitLocation) => {\r\n        if(arrayMatch(hitLocation, _location)) { \r\n            _hits.push(hitLocation);\r\n            return true;\r\n        }; \r\n        \r\n        return false;\r\n    };\r\n    const isSunk = () => {\r\n       return _length == _hits.length;\r\n    };\r\n\r\n    return {\r\n        hit,\r\n        isSunk,\r\n        get length() {\r\n            return _length;\r\n        },\r\n        set length(length) {\r\n            _length = length;\r\n        }, \r\n        get location() {\r\n            return _location;\r\n        },\r\n        set location(coordinates) {\r\n            _location = coordinates;\r\n        },\r\n        get hits() {\r\n            return _hits;\r\n        }\r\n    };\r\n};\r\n\r\nmodule.exports = shipFactory;\n\n//# sourceURL=webpack:///./src/controllers/ship/ship.js?");
+
+/***/ }),
+
+/***/ "./src/controllers/utility/arrays.js":
+/*!*******************************************!*\
+  !*** ./src/controllers/utility/arrays.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const matchingArrays = (arrayOne, arrayTwo) => {\r\n    // Checks array length first\r\n    if(arrayOne.length !== arrayTwo.length) return false;\r\n    // Compares arrays\r\n    for(let i=0; i<arrayOne.length; i++) {\r\n        if(arrayOne[i] !== arrayTwo[i]) return false;\r\n    };\r\n    // Returns two if tests above do not pass;\r\n    return true;\r\n};\r\n\r\nmodule.exports = matchingArrays;\r\n\n\n//# sourceURL=webpack:///./src/controllers/utility/arrays.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const shipFactory = __webpack_require__(/*! ./controllers/ship/ship */ \"./src/controllers/ship/ship.js\");\r\n\r\nconst ship = shipFactory(4);\r\nship.location = [1,1];\r\nconsole.log(ship)\r\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
