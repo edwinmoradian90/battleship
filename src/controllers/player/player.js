@@ -5,7 +5,7 @@ const Player = (name, type, turn=false) => {
     let _type = type;
     let _moves = [];
    
-    const _swapTurns = () => {
+    const swapTurns = () => {
         _turn = _turn == true 
             ? false
             : true
@@ -21,28 +21,21 @@ const Player = (name, type, turn=false) => {
         return true;
     };
 
-    const attack = (personMove, aiMove) => {
+    const computerMove = () => {
+        return new Array(2).fill(arrays.rng());
+    };
+
+    const attack = (selected) => {
         let move;
         switch(_type){
             case 'Person':
-                if(moveIsLegal(personMove)){
-                    console.log(move)
-                    _moves.push(personMove);
-                    _swapTurns();
-                    move = personMove;
-                }
+                    _moves.push(selected);
+                    move = selected;
                 break;
             case 'AI':
-                console.log('ai move')
-                console.log(moveIsLegal(aiMove))
-                if(moveIsLegal(aiMove)){
-                    _moves.push(aiMove);
-                    _swapTurns();
-                    move = aiMove;
-                
-                }
+                 _moves.push(randomMove);
+                 move = randomMove;
                 break;
-            default:
         }
         return move;
     };
@@ -51,6 +44,8 @@ const Player = (name, type, turn=false) => {
         name, 
         attack,
         moveIsLegal,
+        computerMove,
+        swapTurns,
         get type() {
             return _type;
         },
@@ -62,7 +57,7 @@ const Player = (name, type, turn=false) => {
         },
         set turn(turn) {
             _turn = turn;
-        }
+        },
     };
 };
 

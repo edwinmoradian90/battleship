@@ -16,13 +16,13 @@ test('Player can attack enemy board', () => {
 test('Computer can attack enemy board', () => {
     player.type = 'AI';
     player.turn = true;
-    expect(player.attack('', randomArray)).toEqual(randomArray);
+    expect(player.attack(randomArray)).toBeTruthy();
 });
 
 test('Computer cannot have dup attacks', () => {
     player.type = 'AI';
     player.turn = true;
-    player.attack('', [1,1]);
-    player.attack('', [1,1]);
+    player.attack([1,1]);
+    player.attack([1,1]);
     expect(player.moveIsLegal([1,1])).toBe(false);
-})
+});

@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack -w"
+    "build": "webpack -w",
+    "scss": "node-sass -w ./src/assets/scss -o ./src/assets/css"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +16,8 @@
     "jest": "^25.1.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "node-sass": "^4.13.1"
   }
 }

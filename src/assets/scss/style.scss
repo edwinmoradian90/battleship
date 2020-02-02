@@ -1,0 +1,36 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+};
+
+.container {
+    align-items: center;
+    background: green;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.gameboard {
+    height: 500px;
+    width: 500px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    height: calc(500px/10);
+}
+
+.cell {
+    background: darkmagenta;
+    padding: 20px;
+    border: 1px solid lightblue;
+    &:hover {
+        background: darkslateblue;
+        cursor: pointer;
+    }
+}

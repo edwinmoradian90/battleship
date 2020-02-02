@@ -1,7 +1,10 @@
-const shipFactory = require('./controllers/ship/ship');
-const arrays = require('./controllers/utility/arrays');
+const Game = require('./controllers/game');
+const Display = require('./controllers/utility/display');
+const events = require('./controllers/events/events');
+const game = Game();
+const display = Display();
 
-console.log(arrays.rng(1,9))
-const ship = shipFactory(4);
-ship.location = [1,1];
-console.log(ship)
+display.set('gameboard', '#content');
+game.initialize();
+
+document.addEventListener('click', () => events(event, game));
