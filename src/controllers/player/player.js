@@ -22,7 +22,7 @@ const Player = (name, type, turn=false) => {
     };
 
     const computerMove = () => {
-        return new Array(2).fill(arrays.rng());
+        return [arrays.rng(), arrays.rng()];
     };
 
     const attack = (selected) => {
@@ -33,8 +33,8 @@ const Player = (name, type, turn=false) => {
                     move = selected;
                 break;
             case 'AI':
-                 _moves.push(randomMove);
-                 move = randomMove;
+                 _moves.push(computerMove);
+                 move = computerMove;
                 break;
         }
         return move;

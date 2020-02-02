@@ -1,21 +1,24 @@
 const gameboard = () => {
     const _ships = [];
     const _misses = [];
-    const placeShip = (shipFactory, event) => {
-        shipFactory.location = event;
-        _ships.push(shipFactory);
+    const placeShip = (shipFactory, location) => {
+        const ship = shipFactory;
+        ship.location = location;
+        _ships.push(ship);
     };
     const receiveAttack = (coordinates) => {
        for(let i=0; i<_ships.length; i++) {
             if(!_ships[i].hit(coordinates)) {
                 _misses.push(coordinates);
+                console.log('attack missed');
             };
        };
     };
     const allSunk = () => {
         for(let i=0; i<_ships.length; i++) {
-            return _ships[i].isSunk();
+            if(!_ships[i].isSunk()) return false;
         };
+        return true;
     };
 
     return {

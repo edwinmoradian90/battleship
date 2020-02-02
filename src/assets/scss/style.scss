@@ -7,7 +7,7 @@
 
 .container {
     align-items: center;
-    background: green;
+    background: lightseagreen;
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -26,11 +26,11 @@
 }
 
 .cell {
-    background: darkmagenta;
+    background: white;
     padding: 20px;
     border: 1px solid lightblue;
     &:hover {
-        background: darkslateblue;
+        background: lightseagreen;
         cursor: pointer;
     }
 }

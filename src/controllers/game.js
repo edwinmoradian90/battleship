@@ -2,66 +2,58 @@ const Gameboard = require('./gameboard/gameboard');
 const Player = require('./player/player');
 const Ship = require('./ship/ship');
 
-// ships
-const carrier    = Ship(5);
-const battleship = Ship(4);
-const cruiser    = Ship(3);     
-const submarine  = Ship(3);
-const destroyer  = Ship(2);
-
 const game = (event) => {
 
-    let players = '';
-    let current = '';
-
     const initialize = () => {
-        players = { 
-            first: {
-                player: Player('Person', 'Person', true),
-                board: Gameboard(),
-            },
-            second: {
-                player: Player('AI', 'AI', false),
-                board: Gameboard()
-            },
+        
+        person = { 
+            player: Player('Person', 'Person', true),
+            gameboard: Gameboard(),
         };
 
-        current = '';
+        computer = {
+            player: Player('AI', 'AI', false),
+            gameboard: Gameboard(),
+        };
+
+        person.gameboard.placeShip(Ship(1), [1,1]);
+        computer.gameboard.placeShip(Ship(1), [1,1]);
+        computer.gameboard.placeShip(Ship(1), [2,2]);
+
     };
     
     const run = (event) => {
-        
-        // Set current player to person
-        current = players.first;
-        
-        // Check if position available
-        if(!current.player.moveIsLegal(event)) return;
-
-        // Person move
-        current.board.receiveAttack(current.player.attack(event));
+        if(!person.player.moveIsLegal(event)) return;
+    
+        const attack = person.player.attack(event)
+        computer.gameboard.receiveAttack(attack);
         console.log(event, 'attacking')
 
-        //Swap turns and current
-        current.player.swapTurns();
-        current = players.second;
+        person.player.swapTurns();
+        computer.player.swapTurns();
 
-        // Check for end game condition;
-        if(current.board.allSunk()){
-            console.log('gameover');
+        if(computer.gameboard.allSunk()){
+            console.log('gameover', computer.gameboard.allSunk())
             return;
         };
+        console.log('not gameover')
 
-        // Check computer move available
-        let computerMove = current.player.computerMove();
-        while(!current.player.moveIsLegal(computerMove)) {
-            computerMove = current.player.computerMove();
+        let computerMove = computer.player.computerMove();
+
+        while(!computer.player.moveIsLegal(computerMove)) {
+            computerMove = computer.player.computerMove();
             console.log('retrying because position taken');
         };
 
-        // Computer attack and swap turns
         console.log(computerMove);
-        current.board.receiveAttack(computerMove);
-        current.player.swapTurns();
+        computer.player.attack(computerMove);
+        person.gameboard.receiveAttack(computerMove);
+        computer.player.swapTurns();
+
+        if(person.gameboard.allSunk()){
+            console.log('gameover', computer.gameboard.allSunk())
+            return;
+        }
     };
 
     return {
