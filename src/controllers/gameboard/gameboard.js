@@ -1,3 +1,5 @@
+const display = require('../utility/display');
+
 const gameboard = () => {
     const _ships = [];
     const _misses = [];
@@ -21,10 +23,24 @@ const gameboard = () => {
         return true;
     };
 
+    const render = (view, identifier, disable) => {
+        display.clear(identifier);
+        display.set(view, identifier, disable);
+        display.update(_ships, _misses, identifier);
+    };
+
+    const pause = (identifier, enabled) => {
+        identifier == 'computer'
+            ? render('gameboard', '.gameboard_one', enabled)
+            : render('gameboard', '.gameboard_two', enabled);
+    };
+
     return {
+        pause,
         placeShip,
         receiveAttack,
         allSunk,
+        render,
         get ships() {
             return _ships;
         }, 

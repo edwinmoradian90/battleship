@@ -1,10 +1,9 @@
 const Game = require('./controllers/game');
-const Display = require('./controllers/utility/display');
+const display = require('./controllers/utility/display');
 const events = require('./controllers/events/events');
 const game = Game();
-const display = Display();
 
-display.set('gameboard', '#content');
 game.initialize();
+display.set('main', '#content');
 
-document.addEventListener('click', () => events(event, game));
+document.addEventListener('click', () => events(event, game, display));

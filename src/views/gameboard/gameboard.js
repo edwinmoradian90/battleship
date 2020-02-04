@@ -1,22 +1,29 @@
-const container = document.createElement('div');
-container.classList.add('container');
+const generate = (disabled) => { 
+    const board = document.createElement('div');
+    board.classList.add('gameboard');
 
-const gameboard = document.createElement('div');
-gameboard.classList.add('gameboard');
-
-for(let i=0; i<=9; i++){
-    const grid = document.createElement('div');
-    grid.classList.add('grid');
-    grid.id = i;
-    for(let i=0; i<=9; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.id = i;
-        grid.appendChild(cell);
+    for(let i=0; i<=9; i++){
+        const grid = document.createElement('div');
+        grid.classList.add('grid');
+        grid.setAttribute('data-row', i);
+        grid.id = `row-${i}`;
+        for(let i=0; i<=9; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.setAttribute('data-column', i);
+            if(disabled) {
+                cell.style.pointerEvents = 'none';
+            };
+            cell.id = `column-${i}`;
+            grid.appendChild(cell);
+        };
+        board.appendChild(grid);
     };
-    gameboard.appendChild(grid);
-};
-container.appendChild(gameboard);
 
-module.exports = container;
+    return board;
+};
+
+
+
+module.exports = { generate };
 
