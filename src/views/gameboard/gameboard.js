@@ -1,4 +1,4 @@
-const generate = (disabled) => { 
+const generate = (disabled) => {
     const board = document.createElement('div');
     board.classList.add('gameboard');
 

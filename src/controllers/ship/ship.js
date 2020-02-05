@@ -7,11 +7,13 @@ const shipFactory = (length) => {
     let _location = '';
 
     const hit = (hitLocation) => {
-        if(arrays.match(hitLocation, _location)) { 
-            _hits.push(hitLocation);
-            console.log('Your ship has been hit, you idiot');
-            return true;
-        }; 
+        for(let location of _location) {
+            if(arrays.match(hitLocation, location)) { 
+                _hits.push(hitLocation);
+                console.log('Your ship has been hit, you idiot');
+                return true;
+            }; 
+        };
         
         return false;
     };
@@ -42,7 +44,7 @@ const shipFactory = (length) => {
         },
         get hits() {
             return _hits;
-        }
+        },
     };
 };
 

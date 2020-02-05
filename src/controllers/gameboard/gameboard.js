@@ -1,13 +1,27 @@
 const display = require('../utility/display');
+const arrays = require('../utility/arrays');
 
 const gameboard = () => {
     const _ships = [];
     const _misses = [];
-    const placeShip = (shipFactory, location) => {
+
+    const selectShip = (event) => {
+        let ships = document.querySelectorAll('.ship');
+        let ship = document.querySelector(`#${event.target.id}`);
+        ships.forEach(ship => ship.style.border = '0px');
+        ship.style.border = '3px solid lightseagreen';
+
+        return ship;
+    }
+
+    const placeShip = (shipFactory, location, position, length) => {
         const ship = shipFactory;
-        ship.location = location;
+        ship.location = arrays.rangeGenerator(location, length, position);
+        console.log(ship.location)
+        ship.position = position;
         _ships.push(ship);
     };
+
     const receiveAttack = (coordinates) => {
        for(let i=0; i<_ships.length; i++) {
             if(!_ships[i].hit(coordinates)) {
@@ -16,6 +30,7 @@ const gameboard = () => {
             };
        };
     };
+
     const allSunk = () => {
         for(let i=0; i<_ships.length; i++) {
             if(!_ships[i].isSunk()) return false;
@@ -23,20 +38,21 @@ const gameboard = () => {
         return true;
     };
 
-    const render = (view, identifier, disable) => {
+    const render = (view, identifier, disable, show) => {
         display.clear(identifier);
         display.set(view, identifier, disable);
-        display.update(_ships, _misses, identifier);
+        display.update(_ships, _misses, identifier, show);
     };
 
-    const pause = (identifier, enabled) => {
+    const pause = (identifier, disabled, show) => {
         identifier == 'computer'
-            ? render('gameboard', '.gameboard_one', enabled)
-            : render('gameboard', '.gameboard_two', enabled);
+            ? render('gameboard', '.gameboard_one', disabled, show)
+            : render('gameboard', '.gameboard_two', disabled, show);
     };
 
     return {
         pause,
+        selectShip,
         placeShip,
         receiveAttack,
         allSunk,

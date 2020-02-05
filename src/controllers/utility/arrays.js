@@ -17,10 +17,30 @@ const match = (arrayOne, arrayTwo) => {
     return true;
 };
 
+const range = (start, end) => {
+    return Array.apply(0, Array(end))
+        .map((element, index) => index + start);
+};
+
+const rangeGenerator = (array, length, position) => {
+    let newArray = [];
+	for( let i = 0; i<length; i++) {
+  	if(position == 'horizontal') {
+    	newArray.push([array[0] + i, array[1]]);
+    } else 
+    if(position == 'vertical') {
+    	newArray.push([array[0], array[1] + i]);
+    };
+  };
+ return newArray;
+};
+
 const rng = () => Math.round(Math.random() * 9);
 
 module.exports = {
+    rangeGenerator,
     generator,
     match,
+    range,
     rng,
 };

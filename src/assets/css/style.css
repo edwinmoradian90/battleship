@@ -42,3 +42,54 @@
   .cell:hover {
     background: lightseagreen;
     cursor: pointer; }
+
+.setup_container {
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly; }
+
+.ship_drawer {
+  display: flex; }
+
+#ship-0 {
+  height: 100px;
+  width: 50px;
+  background: black; }
+
+#ship-1 {
+  height: 150px;
+  width: 50px;
+  background: black; }
+
+#ship-2 {
+  height: 150px;
+  width: 50px;
+  background: black; }
+
+#ship-3 {
+  height: 200px;
+  width: 50px;
+  background: black; }
+
+#ship-4 {
+  height: 250px;
+  width: 50px;
+  background: black; }
+
+.ship {
+  box-sizing: border-box;
+  margin: 10px; }
+  .ship:hover {
+    border: 3px solid lightseagreen;
+    cursor: pointer; }
+
+.submit_setup {
+  background: lightseagreen;
+  border-radius: 5px;
+  color: white;
+  margin-top: 30px;
+  padding: 20px; }
+  .submit_setup:hover {
+    background: purple;
+    cursor: pointer; }

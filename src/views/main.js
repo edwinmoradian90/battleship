@@ -3,7 +3,7 @@ mainContainer.innerText = 'main page';
 mainContainer.classList.add('main_container');
 
 const start = document.createElement('div');
-start.innerText ='Start';
+start.innerText ='Play';
 start.classList.add('start');
 mainContainer.appendChild(start);
 
