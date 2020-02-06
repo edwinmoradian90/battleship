@@ -18,7 +18,6 @@ const generate = () => {
         ship.classList.add('ship');
         ship.id = `ship-${i}`;
         ship.setAttribute('data-ship', i);
-        ship.setAttribute('draggable', 'true');
         shipDrawer.appendChild(ship);
     };
 

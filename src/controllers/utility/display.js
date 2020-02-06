@@ -1,24 +1,28 @@
+const Gameboard = require('../../views/gameboard/gameboard');
+const main = require('../../views/main');
+const game = require('../../views/game/game');
+const Gameover = require('../../views/gameover/gameover');
+const Setup = require('../../views/setup/setup');
+
 const set = (view, identifier, disabled) => {
-    const main = require('../../views/main');
-    const Gameboard = require('../../views/gameboard/gameboard');
-    const game = require('../../views/game/game');
-    const Setup = require('../../views/setup/setup');
 
     let gameboard = Gameboard.generate(disabled);
+    let gameover = Gameover.generate(); 
     let setup = Setup.generate();
 
     const displays = {
         'setup': setup,
         'main': main,
         'game': game,
-        'gameboard': gameboard
+        'gameboard': gameboard,
+        'gameover': gameover
     };
+
     const element = document.querySelector(identifier);
-    console.log(element)
     element.appendChild(displays[view].cloneNode(true));
 };
 
-const clear = (identifier) => {
+const clearAll = (identifier) => {
     const element = document.querySelector(identifier);
     while(element.firstChild) {
         element.removeChild(element.firstChild);
@@ -27,7 +31,6 @@ const clear = (identifier) => {
 
 const update = (ships, misses, identifier, show) => {
     const gameboard = document.querySelector(identifier);
-    console.log(misses)
     for(miss of misses) {
         let [x, y] = miss;
         const row = gameboard.querySelector(`#row-${y}`);
@@ -53,9 +56,22 @@ const update = (ships, misses, identifier, show) => {
             column.style.background = 'green';
         });
     });
-    
 };
 
+const clear = (child) => {
+    const domElement = document.querySelector(child);
+    domElement.parentNode.removeChild(domElement);
+};
 
+const componentSet = (component, disabled, parent) => {
+    const gameboard = Gameboard.generate(disabled);
+    const components = {
+        'gameboard': gameboard
+    };
 
-module.exports = { set, clear, update };
+    const domElement = document.querySelector(parent);
+    domElement.appendChild(components[component].cloneNode(true));
+};
+    
+
+module.exports = { set, clear, clearAll, componentSet, update };

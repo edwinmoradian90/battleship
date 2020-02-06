@@ -7,10 +7,10 @@ const shipFactory = (length) => {
     let _location = '';
 
     const hit = (hitLocation) => {
-        for(let location of _location) {
-            if(arrays.match(hitLocation, location)) { 
+        for(let i = 0; i < _location.length; i++) {
+            if(arrays.match(hitLocation, _location[i])) { 
                 _hits.push(hitLocation);
-                console.log('Your ship has been hit, you idiot');
+                console.log('Your ship has been hit');
                 return true;
             }; 
         };

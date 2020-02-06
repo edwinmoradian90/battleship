@@ -1,5 +1,5 @@
 let length = '';
-
+// Refactor
 const events = (event, game, Ship) => {
     const item = event.target;
     let ship = '';
@@ -13,13 +13,18 @@ const events = (event, game, Ship) => {
     if(item.matches('.submit_setup')){
         game.setState({setup: false, game: true});
         game.render('game', '#content');
-        game.person.gameboard.render('gameboard', '.gameboard_two', true, true);
+        game.person.gameboard.render(
+
+            'gameboard', 
+            '.gameboard_two', 
+            true, 
+            true
+
+            );
     } else
 
     if(item.matches('.ship')) {
-
         length = parseInt(event.target.dataset.length);
-        console.log(length)
         ship = game.person.gameboard.selectShip(event);
     };
 
@@ -30,14 +35,26 @@ const events = (event, game, Ship) => {
         ];
 
         if(game.state.setup){
-            console.log(length, location)
             game.person.gameboard.placeShip(Ship(length), location, 'vertical', length);
-            game.person.gameboard.render('setup', '#content', true, true);
+            game.person.gameboard.componentRender('gameboard', '.gameboard_container', '.gameboard', false, true);
         } else
         if(game.state.game) {
             game.run(location);
         };
 
+    };
+
+    if(item.matches('.reset_button')) {
+        game.initialize();
+        game.setState({setup: true, initial: false});
+        game.render('setup', '#content');
+
+    };
+
+    if(item.matches('.end_game_button')) {
+        game.initialize();
+        game.setState({initial: true, setup: false, game: false})
+        game.render('main', '#content');
     };
 
 

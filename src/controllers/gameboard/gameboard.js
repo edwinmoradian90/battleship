@@ -4,20 +4,27 @@ const arrays = require('../utility/arrays');
 const gameboard = () => {
     const _ships = [];
     const _misses = [];
+    const _placed = [];
+    let selectedShip = '';
 
     const selectShip = (event) => {
         let ships = document.querySelectorAll('.ship');
-        let ship = document.querySelector(`#${event.target.id}`);
-        ships.forEach(ship => ship.style.border = '0px');
-        ship.style.border = '3px solid lightseagreen';
+        selectedShip = document.querySelector(`#${event.target.id}`);
+        for(let ship of ships) {
+            ship.style.border = '0px';
+        };
+        selectedShip.style.border = '3px solid lightseagreen';
 
-        return ship;
-    }
+        return selectedShip;
+    };
 
     const placeShip = (shipFactory, location, position, length) => {
+        if(selectedShip) {
+            selectedShip.style.display = 'none';
+        };
+
         const ship = shipFactory;
         ship.location = arrays.rangeGenerator(location, length, position);
-        console.log(ship.location)
         ship.position = position;
         _ships.push(ship);
     };
@@ -39,9 +46,16 @@ const gameboard = () => {
     };
 
     const render = (view, identifier, disable, show) => {
-        display.clear(identifier);
+        display.clearAll(identifier);
         display.set(view, identifier, disable);
         display.update(_ships, _misses, identifier, show);
+    };
+
+    // Refactor
+    const componentRender = (component, parent, child, disabled, show) => {
+        display.clear(child);
+        display.componentSet(component, disabled, parent);
+        display.update(_ships, _misses, parent, show);
     };
 
     const pause = (identifier, disabled, show) => {
@@ -55,6 +69,7 @@ const gameboard = () => {
         selectShip,
         placeShip,
         receiveAttack,
+        componentRender,
         allSunk,
         render,
         get ships() {
