@@ -9,8 +9,8 @@ test('gameboard factory exists', () => {
 });
 
 test('gameboard placement of ships', () => {
-    gameboard.placeShip(ship, [1,1]);
-    expect(ships[0].location).toEqual([1,1]);
+    gameboard.placeShip(ship, [1,1], 'horizontal', 1);
+    expect(ships[0].location).toEqual([[1,1]]);
 });
 
 test('receives attack, check for hit', () => {

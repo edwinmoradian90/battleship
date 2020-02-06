@@ -6,8 +6,9 @@ test('Ship object exists', () => {
 });
 
 test('Hit stores hit location', () => {
-    ship.location = [1,1];
+    ship.location = [[1,1]];
     ship.hit([1,1]);
+    console.log(ship.location)
     expect(ship.hits).toEqual([[1,1]]);
 });
 

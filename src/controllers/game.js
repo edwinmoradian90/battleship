@@ -31,17 +31,19 @@ const game = () => {
         computer.player = Player('AI','AI', false );
         computer.gameboard = Gameboard();
 
-        computer.gameboard.placeShip(Ship(1), [1,1]);
-        computer.gameboard.placeShip(Ship(1), [2,2]);
+        computer.gameboard.placeShip(Ship(3), [1,1], 'horizontal', 3);
+        computer.gameboard.placeShip(Ship(1), [4,4], 'horizontal', 1);
     };
     // for refactor
-    const render = (view, identifier, enabled) => {
-        display.clear(identifier);
-        display.set(view, identifier, enabled);
+    const render = (view, identifier, disabled) => {
+        display.clearAll(identifier);
+        display.set(view, identifier, disabled);
     };
     // for refactor
     const _checkWinCondition = identifier => {
-        identifier.gameboard.allSunk();
+        if(identifier.gameboard.allSunk()){
+            render('gameover', '#content', false);
+        };
     };
 
     const setState = (object) => {
@@ -51,7 +53,6 @@ const game = () => {
     const _playerOneMove = (event) => {
 
         console.log('person turn')
-        console.log(person.player)
         if(!person.player.moveIsLegal(event)) return;
 
         const attack = person.player.attack(event)
@@ -63,10 +64,6 @@ const game = () => {
         console.log(computer.player.turn)
 
         computer.gameboard.render('gameboard', '.gameboard_one', false, true);
-        if(computer.gameboard.allSunk()){
-            console.log('gameover', computer.gameboard.allSunk())
-            return;
-        };
 
         console.log('not gameover');
     };
@@ -95,11 +92,6 @@ const game = () => {
             computer.player.turn = false;
             person.player.turn = true;
 
-            if(person.gameboard.allSunk()){
-                console.log('gameover', computer.gameboard.allSunk())
-                return;
-            };
-
             computer.gameboard.pause('computer', false, false);
             console.log('end turn')
 
@@ -116,10 +108,19 @@ const game = () => {
             _playerOneMove(event);
         };
 
+        _checkWinCondition(computer);
 
+        if(computer.gameboard.allSunk()){
+            console.log('gameover', computer.gameboard.allSunk())
+            return;
+        };
+
+        // Check Turn
         if(computer.player.turn) {
             _playerTwoMove(event);
         };
+
+        _checkWinCondition(person);
 
     };
 

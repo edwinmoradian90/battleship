@@ -50,7 +50,8 @@
   justify-content: space-evenly; }
 
 .ship_drawer {
-  display: flex; }
+  display: flex;
+  width: 400px; }
 
 #ship-0 {
   height: 100px;
@@ -81,7 +82,6 @@
   box-sizing: border-box;
   margin: 10px; }
   .ship:hover {
-    border: 3px solid lightseagreen;
     cursor: pointer; }
 
 .submit_setup {
@@ -93,3 +93,35 @@
   .submit_setup:hover {
     background: purple;
     cursor: pointer; }
+
+.gameover_container {
+  background: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.gameover_buttons {
+  display: flex; }
+
+.end_game_button {
+  padding: 20px;
+  background: lightseagreen;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: .3s; }
+  .end_game_button:hover {
+    background: purple; }
+
+.reset_button {
+  padding: 20px;
+  background: lightseagreen;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: .3s; }
+  .reset_button:hover {
+    background: purple; }
