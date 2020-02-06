@@ -203,7 +203,7 @@ eval("const generate = (disabled) => {\r\n    const board = document.createEleme
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("throw new Error(\"Module build failed: Error: ENOENT: no such file or directory, open 'C:\\\\Users\\\\Edwin\\\\Desktop\\\\microverse\\\\javascript\\\\battleship_js\\\\src\\\\views\\\\gameover\\\\gameover.js'\");\n\n//# sourceURL=webpack:///./src/views/gameover/gameover.js?");
+eval("const generate = () => {\r\n    const gameoverContainer = document.createElement('div');\r\n    gameoverContainer.classList.add('gameover_container');\r\n\r\n    const winner = document.createElement('div');\r\n    winner.classList.add('winner');\r\n    winner.innerText = '';\r\n\r\n    const gameoverButtons = document.createElement('div');\r\n    gameoverButtons.classList.add('gameover_buttons');\r\n    \r\n    const resetButton = document.createElement('div');\r\n    resetButton.classList.add('reset_button');\r\n    resetButton.innerText = 'Restart';\r\n\r\n    const endGameButton = document.createElement('div');\r\n    endGameButton.classList.add('end_game_button');\r\n    endGameButton.innerText = 'End game';\r\n\r\n\r\n    gameoverButtons.appendChild(resetButton);\r\n    gameoverButtons.appendChild(endGameButton);\r\n    gameoverContainer.appendChild(winner);\r\n    gameoverContainer.appendChild(gameoverButtons);\r\n\r\n    return gameoverContainer;\r\n};\r\n\r\nmodule.exports = { generate };\n\n//# sourceURL=webpack:///./src/views/gameover/gameover.js?");
 
 /***/ }),
 
