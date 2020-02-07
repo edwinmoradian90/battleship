@@ -1,6 +1,7 @@
 const generate = () => {
     const gameoverContainer = document.createElement('div');
     gameoverContainer.classList.add('gameover_container');
+    gameoverContainer.classList.add('crt');
 
     const winner = document.createElement('div');
     winner.classList.add('winner');

@@ -47,7 +47,7 @@ const update = (ships, misses, identifier, show) => {
                 let [x,y] = location;
                 let row = gameboard.querySelector(`#row-${y}`);
                 let column = row.querySelector(`#column-${x}`);
-                column.style.background = 'lightseagreen';
+                column.style.background = '#008F11';
                 column.style.borderBottom = '0px';
                 column.style.borderTop = '0px';
             });
@@ -82,7 +82,7 @@ const componentSet = (component, parent, disabled) => {
 const enableSubmit = () => {
     const submitButton = document.querySelector('.submit_setup');
     submitButton.style.pointerEvents = 'auto';
-    submitButton.style.background = 'lightseagreen';
+    submitButton.style.background = '#008F11';
     submitButton.classList.add('hover_button');
 };
 

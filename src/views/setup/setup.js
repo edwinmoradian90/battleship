@@ -37,6 +37,7 @@ const generate = () => {
 
     const gameboardContainer = document.createElement('div');
     gameboardContainer.classList.add('gameboard_container');
+    gameboardContainer.classList.add('crt');
     
     const submitSetup = document.createElement('div');
     submitSetup.classList.add('submit_setup');

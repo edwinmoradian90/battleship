@@ -8,7 +8,10 @@ const events = (event, game, Ship) => {
     let location = '';
 
     if(item.matches('.start')) {
+        const input = document.querySelector('.input');
         game.setState({setup: true, initial: false});
+        game.person.player.name = input.value || 'anonomyus';
+        console.log(game.person.player.name)
         game.render('setup', '#content');
         display.disableGameboard();
     } else
