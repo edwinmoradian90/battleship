@@ -1,6 +1,7 @@
 const arrays = require('../utility/arrays');
 
 const Player = (name, type, turn=false) => {
+    let _name = name;
     let _turn = turn;
     let _type = type;
     let _moves = [];
@@ -41,11 +42,16 @@ const Player = (name, type, turn=false) => {
     };
 
     return{
-        name, 
         attack,
         moveIsLegal,
         computerMove,
         swapTurns,
+        get name () {
+            return _name;
+        },
+        set name(name) {
+            _name = name;
+        },
         get type() {
             return _type;
         },

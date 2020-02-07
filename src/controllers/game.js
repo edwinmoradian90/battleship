@@ -43,8 +43,21 @@ const game = () => {
     const _checkWinCondition = identifier => {
         if(identifier.gameboard.allSunk()){
             render('gameover', '#content', false);
+            display.showWinner(_getWinner());
         };
     };
+
+    const _getWinner = () => {
+        const computerTurn = computer.player.turn;
+        let winner;
+        if(computerTurn) {
+            winner = computer;
+        };
+        
+        winner = person.player.name;
+
+        return winner;
+    }
 
     const setState = (object) => {
         Object.assign(state, object);
@@ -64,7 +77,6 @@ const game = () => {
         console.log(computer.player.turn)
 
         computer.gameboard.render('gameboard', '.gameboard_one', false, true);
-
         console.log('not gameover');
     };
 

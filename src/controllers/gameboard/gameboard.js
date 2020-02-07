@@ -53,8 +53,8 @@ const gameboard = () => {
 
     // Refactor
     const componentRender = (component, parent, child, disabled, show) => {
-        display.clear(child);
-        display.componentSet(component, disabled, parent);
+        display.clear(parent, child);
+        display.componentSet(component, parent, disabled);
         display.update(_ships, _misses, parent, show);
     };
 
@@ -64,12 +64,21 @@ const gameboard = () => {
             : render('gameboard', '.gameboard_two', disabled, show);
     };
 
+    const togglePosition = (ship) => {
+        ship.position = ship.position == 'vertical' 
+            ? ship.position = 'horizontal'
+            : ship.position = 'vertical';
+
+        ship.location = arrays.rangeGenerator(ship.location, ship.length, ship.position);
+    }
+
     return {
         pause,
         selectShip,
         placeShip,
         receiveAttack,
         componentRender,
+        togglePosition,
         allSunk,
         render,
         get ships() {

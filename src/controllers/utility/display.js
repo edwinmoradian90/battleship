@@ -8,7 +8,7 @@ const set = (view, identifier, disabled) => {
 
     let gameboard = Gameboard.generate(disabled);
     let gameover = Gameover.generate(); 
-    let setup = Setup.generate();
+    let { setup } = Setup.generate();
 
     const displays = {
         'setup': setup,
@@ -24,6 +24,7 @@ const set = (view, identifier, disabled) => {
 
 const clearAll = (identifier) => {
     const element = document.querySelector(identifier);
+    console.log(element)
     while(element.firstChild) {
         element.removeChild(element.firstChild);
     };
@@ -47,6 +48,8 @@ const update = (ships, misses, identifier, show) => {
                 let row = gameboard.querySelector(`#row-${y}`);
                 let column = row.querySelector(`#column-${x}`);
                 column.style.background = 'lightseagreen';
+                column.style.borderBottom = '0px';
+                column.style.borderTop = '0px';
             });
         };
         ship.hits.forEach(hit => {
@@ -58,20 +61,75 @@ const update = (ships, misses, identifier, show) => {
     });
 };
 
-const clear = (child) => {
-    const domElement = document.querySelector(child);
-    domElement.parentNode.removeChild(domElement);
+const clear = (parent, child) => {
+    const domElement = document.querySelector(parent);
+    const elementChild = document.querySelector(child);
+    domElement.removeChild(elementChild);
 };
 
-const componentSet = (component, disabled, parent) => {
+const componentSet = (component, parent, disabled) => {
     const gameboard = Gameboard.generate(disabled);
+    const { gameboardSetup } = Setup.generate();
     const components = {
-        'gameboard': gameboard
+        'gameboard': gameboard,
+        'gameboardSetup': gameboardSetup
     };
 
     const domElement = document.querySelector(parent);
     domElement.appendChild(components[component].cloneNode(true));
 };
+
+const enableSubmit = () => {
+    const submitButton = document.querySelector('.submit_setup');
+    submitButton.style.pointerEvents = 'auto';
+    submitButton.style.background = 'lightseagreen';
+    submitButton.classList.add('hover_button');
+};
+
+const disableGameboard = (gameboard) => {
+    let cells;
+    if(gameboard) {
+        const board = document.querySelector(gameboard);
+        cells = board.querySelector('.cell');  
+    } else {
+        cells = document.querySelectorAll('.cell');
+    };
+
+    cells.forEach(cell => cell.style.pointerEvents = 'none');
+};
+
+const enableGameboard = () => {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.style.pointerEvents = 'auto');
+};
+
+const showShipName = (ship) => {
+    const title = document.querySelector('.ship_title');
+    title.innerText = ship.dataset.name;
+};
+
+const showBoardReady = () => {
+    const title = document.querySelector('.ship_title');
+    title.innerText = 'Ships are set!'
+}
+
+const showWinner = (playerName) => {
+    const winner = document.querySelector('.winner');
+
+    winner.innerText = `Good work, ${playerName}, you got 'em.`;
+};
     
 
-module.exports = { set, clear, clearAll, componentSet, update };
+module.exports = { 
+    set, 
+    clear, 
+    update,
+    clearAll, 
+    showWinner,
+    showShipName,
+    componentSet,
+    enableSubmit, 
+    showBoardReady,
+    enableGameboard,
+    disableGameboard,
+};
