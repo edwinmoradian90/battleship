@@ -20,6 +20,7 @@ test('receives attack, check for hit', () => {
 
 test('receives attack, check for miss', () => {
     gameboard.receiveAttack([8,8]);
+    console.log(gameboard.misses)
     expect(gameboard.misses).toEqual([[8,8]]);
 });
 

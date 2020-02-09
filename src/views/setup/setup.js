@@ -37,21 +37,39 @@ const generate = () => {
 
     const gameboardContainer = document.createElement('div');
     gameboardContainer.classList.add('gameboard_container');
-    gameboardContainer.classList.add('crt');
+    //gameboardContainer.classList.add('crt');
     
     const submitSetup = document.createElement('div');
     submitSetup.classList.add('submit_setup');
-    submitSetup.innerText = 'Start Game';
+    submitSetup.innerText = 'Place Your Ships';
+
+    const positionButtonsContainer = document.createElement('div');
+    positionButtonsContainer.classList.add('position_buttons_container');
+
+    const horizontalButton = document.createElement('div');
+    horizontalButton.classList.add('horizontal_button');
+    horizontalButton.innerText = 'horizontal';
+
+    const verticalButton = document.createElement('div');
+    verticalButton.classList.add('vertical_button');
+    verticalButton.innerText = 'vertical';
 
     const setupBoard = gameboard.generate();
 
+    positionButtonsContainer.appendChild(horizontalButton);
+    positionButtonsContainer.appendChild(verticalButton);
     gameboardContainer.appendChild(setupBoard);
     gameboardContainer.appendChild(submitSetup);
     shipDrawerContainer.appendChild(shipDrawer);
+    shipDrawerContainer.appendChild(positionButtonsContainer);
     setupContainer.appendChild(shipDrawerContainer);
     setupContainer.appendChild(gameboardContainer);
 
-    return { setup: setupContainer , gameboardSetup: gameboardContainer };
+    return { 
+        setup: setupContainer, 
+        gameboardSetup: gameboardContainer, 
+        positionButtons: positionButtonsContainer
+    };
 };
 
 module.exports = { generate };

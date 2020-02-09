@@ -1,4 +1,6 @@
 const arrays = require('../utility/arrays');
+const fire = document.createElement('audio');
+fire.src = '../src/assets/sounds/fire.mp3';
 
 const shipFactory = (length) => {
     let _hits = [];
@@ -7,16 +9,31 @@ const shipFactory = (length) => {
     let _location = '';
 
     const hit = (hitLocation) => {
-        for(let i = 0; i < _location.length; i++) {
-            if(arrays.match(hitLocation, _location[i])) { 
+        let result = false;
+        _location.forEach(location => {
+            if(arrays.match(hitLocation, location)) { 
                 _hits.push(hitLocation);
-                console.log('Your ship has been hit');
-                return true;
-            }; 
-        };
-        
-        return false;
+                //possible refactor
+                setTimeout(() => {
+                    
+                    fire.currentTime = 0;
+                    fire.play();
+                    console.log('Your ship has been hit');
+                }, 200);
+
+                result = true;
+            };
+        });
+        console.log(result);
+        return result;
     };
+
+    const rotateShip = (ship) => {
+        _position = _position == 'vertical' 
+            ? 'horizontal'
+            : 'vertical';
+    };
+
     const isSunk = () => {
        return _length == _hits.length;
     };
@@ -24,6 +41,7 @@ const shipFactory = (length) => {
     return {
         hit,
         isSunk,
+        rotateShip,
         get length() {
             return _length;
         },

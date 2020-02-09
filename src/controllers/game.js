@@ -2,6 +2,10 @@ const Gameboard = require('./gameboard/gameboard');
 const Player = require('./player/player');
 const Ship = require('./ship/ship');
 const display = require('./utility/display');
+const arrays = require('./utility/arrays');
+
+const typingSound = document.createElement('audio');
+typingSound.src = '../src/assets/sounds/type.mp3';
 
 const game = () => {
 
@@ -23,6 +27,19 @@ const game = () => {
         end: false
     };
 
+    const _setComputerBoard = () => {
+        const shipPositions = ['horizontal', 'vertical'];
+        for(let i=0; i<5; i++) {
+            let shipSize = [2, 3, 3, 4, 5];
+            let position = arrays.rng(1);
+            let boardLocation = [arrays.rng(9), arrays.rng(9)];
+
+            computer
+                .gameboard
+                .placeShip(Ship(shipSize[i]), boardLocation, shipPositions[position], shipSize[i] );
+        };
+    };
+
     const initialize = () => {
 
         person.player = Player('Person', 'Person', true);
@@ -31,8 +48,7 @@ const game = () => {
         computer.player = Player('AI','AI', false );
         computer.gameboard = Gameboard();
 
-        computer.gameboard.placeShip(Ship(3), [1,1], 'horizontal', 3);
-        computer.gameboard.placeShip(Ship(1), [4,4], 'horizontal', 1);
+        _setComputerBoard();
     };
     // for refactor
     const render = (view, identifier, disabled) => {
@@ -43,6 +59,7 @@ const game = () => {
     const _checkWinCondition = identifier => {
         if(identifier.gameboard.allSunk()){
             render('gameover', '#content', false);
+            setState({game: false, end: true})
             display.showWinner(_getWinner());
         };
     };
@@ -64,13 +81,14 @@ const game = () => {
     };
 
     const _playerOneMove = (event) => {
+        console.log(computer.gameboard.ships)
 
         console.log('person turn')
         if(!person.player.moveIsLegal(event)) return;
 
         const attack = person.player.attack(event)
         computer.gameboard.receiveAttack(attack);
-        console.log(event, 'attacking')
+        console.log(attack, 'attacking')
 
         person.player.turn = false;
         computer.player.turn = true;
@@ -100,6 +118,7 @@ const game = () => {
             computer.player.attack(computerMove);
             person.gameboard.receiveAttack(computerMove);
             person.gameboard.render('gameboard', '.gameboard_two', true, true);
+            typingSound.play();
 
             computer.player.turn = false;
             person.player.turn = true;

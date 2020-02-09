@@ -36,27 +36,33 @@ const update = (ships, misses, identifier, show) => {
         let [x, y] = miss;
         const row = gameboard.querySelector(`#row-${y}`);
         const column = row.querySelector(`#column-${x}`);
-        column.style.background = 'red';
-    }
+        column.style.background = 'rgba(255,0,0,.1)';
+    };
 
     ships.forEach(ship => {
 
-        const gameboard = document.querySelector(identifier);
         if(ship.location && show) {
-            ship.location.forEach((location, i ) =>{
+            ship.location.forEach((location, i ) => {
                 let [x,y] = location;
                 let row = gameboard.querySelector(`#row-${y}`);
                 let column = row.querySelector(`#column-${x}`);
-                column.style.background = '#008F11';
-                column.style.borderBottom = '0px';
-                column.style.borderTop = '0px';
+                column.style.background = 'black';
+                column.style.border = '0px';
+                column.style.borderLeft = '1px solid rgba(0,125,255,.5)';
+                column.style.borderRight = '1px solid rgba(0,125,255,.5)';
+                //column.style.boxShadow = '0px 0px 7px 3px rgba(0,125,255,.5)';
             });
         };
         ship.hits.forEach(hit => {
+            const gameboard = document.querySelector(identifier);
             let [x, y] = hit;
             let row = gameboard.querySelector(`#row-${y}`);
             let column = row.querySelector(`#column-${x}`);
-            column.style.background = 'green';
+            column.style.backgroundImage = 'url("https://media.giphy.com/media/1wmdI5Nk5MjD0XIwdy/giphy.gif")' || 'purple';
+            column.style.opacity = '1';
+            column.style.backgroundSize = 'cover';
+            column.style.backgroundPosition = 'center';
+            column.style.backgroundRepeat = 'no-repeat';
         });
     });
 };
@@ -69,10 +75,11 @@ const clear = (parent, child) => {
 
 const componentSet = (component, parent, disabled) => {
     const gameboard = Gameboard.generate(disabled);
-    const { gameboardSetup } = Setup.generate();
+    const { gameboardSetup, positionButtons } = Setup.generate();
     const components = {
         'gameboard': gameboard,
-        'gameboardSetup': gameboardSetup
+        'gameboardSetup': gameboardSetup,
+        'positionButtons' : positionButtons
     };
 
     const domElement = document.querySelector(parent);
@@ -98,6 +105,22 @@ const disableGameboard = (gameboard) => {
     cells.forEach(cell => cell.style.pointerEvents = 'none');
 };
 
+const setShipVertical = () => {
+    const vertical = document.querySelector('.vertical_button');
+    const horizontal = document.querySelector('.horizontal_button');
+    vertical.style.color = 'white';
+    horizontal.style.color = 'black';
+    return 'vertical';
+};
+
+const setShipHorizontal = () => {
+    const vertical = document.querySelector('.vertical_button');
+    const horizontal = document.querySelector('.horizontal_button');
+    vertical.style.color = 'black';
+    horizontal.style.color = 'white';
+    return 'horizontal';
+};
+
 const enableGameboard = () => {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style.pointerEvents = 'auto');
@@ -110,6 +133,8 @@ const showShipName = (ship) => {
 
 const showBoardReady = () => {
     const title = document.querySelector('.ship_title');
+    const startButton = document.querySelector('.submit_setup');
+    startButton.innerText = 'Start Game';
     title.innerText = 'Ships are set!'
 }
 
@@ -128,8 +153,10 @@ module.exports = {
     showWinner,
     showShipName,
     componentSet,
-    enableSubmit, 
+    enableSubmit,
     showBoardReady,
+    setShipVertical,
+    setShipHorizontal,
     enableGameboard,
     disableGameboard,
 };

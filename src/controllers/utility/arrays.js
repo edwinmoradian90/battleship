@@ -35,7 +35,7 @@ const rangeGenerator = (array, length, position) => {
  return newArray;
 };
 
-const rng = () => Math.round(Math.random() * 9);
+const rng = (number) => Math.round(Math.random() * (number || 9 ));
 
 module.exports = {
     rangeGenerator,

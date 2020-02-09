@@ -12,7 +12,7 @@
 
 .main_container {
   align-items: center;
-  background: black;
+  background: url("../images/space.jpg");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -24,7 +24,8 @@
 .main_title {
   animation: fadein 6s 1;
   color: white;
-  font-size: 20px; }
+  font-size: 30px;
+  letter-spacing: 3px; }
 
 .input_container {
   align-items: center;
@@ -55,7 +56,6 @@
   .start:hover {
     background-color: black;
     border: 0px;
-    box-shadow: 0.5px 0.5px 20px rgba(255, 255, 255, 0.5);
     color: white;
     cursor: pointer; }
 
@@ -73,6 +73,7 @@
 
 .setup_container {
   background: black;
+  background-size: cover;
   box-sizing: border-box;
   height: 100vh; }
 
@@ -80,6 +81,9 @@
   height: 100%; }
 
 .gameboard {
+  filter: brightness(135%);
+  background: url("../images/space.jpg");
+  background-size: cover;
   height: 500px;
   width: 500px; }
 
@@ -89,9 +93,9 @@
   height: calc(500px/10); }
 
 .cell {
-  background: black;
+  background: transparent;
   padding: 20px;
-  border: 1px solid #008F11; }
+  border: 1px solid rgba(61, 47, 255, 0.315); }
   .cell:hover {
     background: lightseagreen;
     cursor: pointer; }
@@ -117,8 +121,31 @@
 .ship_drawer {
   display: flex;
   justify-content: space-around;
-  margin-top: 30px;
+  margin: 32px 0px;
+  height: 250px;
   width: 400px; }
+
+.position_buttons_container {
+  align-items: flex-end;
+  box-sizing: border-box;
+  display: flex;
+  height: auto;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%; }
+
+.horizontal_button {
+  background: darkslateblue;
+  cursor: pointer;
+  padding: 20px; }
+
+.vertical_button {
+  background: darkslateblue;
+  cursor: pointer;
+  padding: 20px; }
+
+.active {
+  color: white; }
 
 #ship-0 {
   height: 100px;
@@ -141,7 +168,8 @@
   width: 50px; }
 
 .ship {
-  background: #008F11;
+  background: black;
+  box-shadow: 0px 0px 5px 2px rgba(0, 125, 255, 0.5);
   box-sizing: border-box;
   transition: .5s; }
   .ship:hover {
@@ -314,9 +342,13 @@
 
 @keyframes fadein {
   from {
-    opacity: 0; }
+    opacity: 0;
+    color: black;
+    filter: blur(10px); }
   to {
-    opacity: 1; } }
+    opacity: 1;
+    color: white;
+    filter: blur(0px); } }
 
 /* Firefox < 16 */
 @-moz-keyframes fadein {
@@ -345,3 +377,19 @@
     opacity: 0; }
   to {
     opacity: 1; } }
+
+@keyframes pulse {
+  from {
+    background-color: rgba(255, 0, 0, 0.8); }
+  to {
+    background-color: rgba(255, 255, 0, 0.8); } }
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0); }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0); }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0); } }

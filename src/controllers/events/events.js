@@ -1,9 +1,17 @@
-const arrays = require('../utility/arrays');
-const display = require('../utility/display');
 let length = '';
 let ship = '';
+let shipPosition = 'vertical';
+
+const display = require('../utility/display');
+const typingSound = document.createElement('audio');
+const attack = document.createElement('audio');
+
+typingSound.src = '../src/assets/sounds/type.mp3';
+attack.setAttribute('src', '../src/assets/sounds/attack.mp3');
+
 // Refactor
 const events = (event, game, Ship) => {
+    typingSound.play();
     const item = event.target;
     let location = '';
 
@@ -32,8 +40,18 @@ const events = (event, game, Ship) => {
     if(item.matches('.ship')) {
         length = parseInt(event.target.dataset.length);
         ship = game.person.gameboard.selectShip(event);
+        shipPosition = display.setShipVertical();
         display.enableGameboard();
         display.showShipName(ship);
+        console.log(ship)
+    };
+
+    if(item.matches('.vertical_button')) {
+        shipPosition = display.setShipVertical();
+    };
+
+    if(item.matches('.horizontal_button')) {
+        shipPosition = display.setShipHorizontal();
     };
 
     if(item.matches('.cell')) {
@@ -42,13 +60,16 @@ const events = (event, game, Ship) => {
             parseInt(item.parentNode.dataset.row)
         ];
         if(game.state.setup && ship) {
-            game.person.gameboard.placeShip(Ship(length), location, 'vertical', length);
-            game.person.gameboard.componentRender('gameboardSetup', '.setup_container', '.gameboard_container', false, true);
-            ship.style.display = 'none';
+            const personGameboard = game.person.gameboard;
+            //refactor
+            personGameboard.placeShip(Ship(length), location, shipPosition, length);
+            personGameboard.componentRender('gameboardSetup', '.setup_container', '.gameboard_container', false, true);
             location = '';
-            game.person.gameboard.ships.length == 5 
-                ? (display.enableSubmit(), display.showBoardReady())
-                : null;
+            if(personGameboard.isReady(personGameboard.ships)) {
+                display.enableSubmit(), 
+                display.showBoardReady(), 
+                attack.play();
+            };
             display.disableGameboard();
         } else
         if(game.state.game) {
@@ -58,10 +79,11 @@ const events = (event, game, Ship) => {
     };
 
     if(item.matches('.reset_button')) {
+        const name = game.person.player.name;
         game.initialize();
         game.setState({setup: true, initial: false});
         game.render('setup', '#content');
-
+        game.person.player.name = name;
     };
 
     if(item.matches('.end_game_button')) {
