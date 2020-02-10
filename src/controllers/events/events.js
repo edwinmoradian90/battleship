@@ -5,7 +5,9 @@ let shipPosition = 'vertical';
 const display = require('../utility/display');
 const typingSound = document.createElement('audio');
 const attack = document.createElement('audio');
+const wrong = document.createElement('audio');
 
+wrong.src = '../src/assets/sounds/wrong.mp3';
 typingSound.src = '../src/assets/sounds/type.mp3';
 attack.setAttribute('src', '../src/assets/sounds/attack.mp3');
 
@@ -18,7 +20,7 @@ const events = (event, game, Ship) => {
     if(item.matches('.start')) {
         const input = document.querySelector('.input');
         game.setState({setup: true, initial: false});
-        game.person.player.name = input.value || 'anonomyus';
+        game.person.player.name = input.value || 'person';
         console.log(game.person.player.name)
         game.render('setup', '#content');
         display.disableGameboard();
@@ -62,7 +64,11 @@ const events = (event, game, Ship) => {
         if(game.state.setup && ship) {
             const personGameboard = game.person.gameboard;
             //refactor
-            personGameboard.placeShip(Ship(length), location, shipPosition, length);
+            if(!personGameboard.placeShip(Ship(length), location, shipPosition, length)) {
+
+                wrong.currentTime = 0;
+                wrong.play();
+            };
             personGameboard.componentRender('gameboardSetup', '.setup_container', '.gameboard_container', false, true);
             location = '';
             if(personGameboard.isReady(personGameboard.ships)) {

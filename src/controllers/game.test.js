@@ -1,3 +1,5 @@
+const Game = require('../controllers/game');
+const game = Game();
 const Player = require('./player/player');
 const Gameboard = require('./gameboard/gameboard');
 const players = new Array(2).fill(Player('Something', 'Person', false));
@@ -9,4 +11,10 @@ test('Create players on game start', () => {
 
 test('Create gameboards on game start', () => {
     expect(gameboards).toBeTruthy();
+});
+
+test('Check if computer board has 5 ships', () => {
+    game.initialize();
+    console.log(game)
+    expect(game.computer.gameboard.ships.length).toBe(5);
 });

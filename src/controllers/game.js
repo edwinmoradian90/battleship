@@ -29,15 +29,25 @@ const game = () => {
 
     const _setComputerBoard = () => {
         const shipPositions = ['horizontal', 'vertical'];
-        for(let i=0; i<5; i++) {
-            let shipSize = [2, 3, 3, 4, 5];
-            let position = arrays.rng(1);
-            let boardLocation = [arrays.rng(9), arrays.rng(9)];
+        let shipSize = [2, 3, 3, 4, 5];
+            for(let i=0; i<5; i++) {
+                let boardLocation;
+                const position = shipPositions[arrays.rng(1)]
+                console.log(position)
+                if(position == 'horizontal') {
+                    boardLocation = [arrays.rng(9 - shipSize[i]), i];
+                } else {
+                    boardLocation = [i, arrays.rng(9 - shipSize[i])];
+                };
 
-            computer
-                .gameboard
-                .placeShip(Ship(shipSize[i]), boardLocation, shipPositions[position], shipSize[i] );
-        };
+                    let placedShip = 
+                    computer
+                        .gameboard
+                        .placeShip(Ship(shipSize[i]), boardLocation, position, shipSize[i]);
+                        console.log(computer.gameboard.ships.length )
+                
+                placedShip == false ? i-- : null;
+            };
     };
 
     const initialize = () => {
@@ -81,37 +91,30 @@ const game = () => {
     };
 
     const _playerOneMove = (event) => {
-        console.log(computer.gameboard.ships)
+    console.log(computer.gameboard.ships)
 
-        console.log('person turn')
         if(!person.player.moveIsLegal(event)) return;
 
         const attack = person.player.attack(event)
         computer.gameboard.receiveAttack(attack);
-        console.log(attack, 'attacking')
 
         person.player.turn = false;
         computer.player.turn = true;
-        console.log(computer.player.turn)
 
         computer.gameboard.render('gameboard', '.gameboard_one', false, true);
-        console.log('not gameover');
     };
 
     const _playerTwoMove = () => {
+        console.log(computer.gameboard.ships.length)
         
         computer.gameboard.pause('computer', true, false);
         // Setting Time out to make computer feel more human.
         setTimeout(() => {
             
-            console.log('computer turn')
-
             let computerMove = computer.player.computerMove();
-            console.log(person.gameboard.ships)
 
             while(!computer.player.moveIsLegal(computerMove)) {
                 computerMove = computer.player.computerMove();
-                console.log('retrying because position taken');
             };
 
             console.log(computerMove);
@@ -124,7 +127,6 @@ const game = () => {
             person.player.turn = true;
 
             computer.gameboard.pause('computer', false, false);
-            console.log('end turn')
 
         }, 3000);
             
@@ -142,7 +144,6 @@ const game = () => {
         _checkWinCondition(computer);
 
         if(computer.gameboard.allSunk()){
-            console.log('gameover', computer.gameboard.allSunk())
             return;
         };
 
@@ -159,6 +160,7 @@ const game = () => {
         run,
         render,
         person,
+        computer,
         state,
         setState,
         initialize,

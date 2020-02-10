@@ -1,7 +1,5 @@
 const display = require('../utility/display');
 const arrays = require('../utility/arrays');
-const wrong = document.createElement('audio');
-wrong.src = '../src/assets/sounds/wrong.mp3';
 
 const gameboard = () => {
     const _ships = [];
@@ -13,9 +11,6 @@ const gameboard = () => {
         location.forEach((location, i) => {
             let [newShipLocationX, newShipLocationY] = location;
             if(newShipLocationX > 9 || newShipLocationY > 9){
-                console.log('bigger')
-                wrong.currentTime = 0;
-                wrong.play();
                 result = true;
             };
         });
@@ -32,9 +27,6 @@ const gameboard = () => {
                     ship.location.forEach(shipLocation => {
                         let [placedShipLocationX, placedShipLocationY] = shipLocation;
                         if(placedShipLocationY == newShipLocationY && placedShipLocationX == newShipLocationX) {
-                        console.log(placedShipLocationY, newShipLocationY)
-                            wrong.currentTime = 0;
-                            wrong.play();
                             result = true;
                         };
                     });
@@ -68,7 +60,6 @@ const gameboard = () => {
         } else
         
         if(_checkShipCollision(ship.location)) {
-            console.log('ships crashing')
             ship.location = '';
             return false;
         }
@@ -88,8 +79,6 @@ const gameboard = () => {
             console.log(coordinates)
             if(!shipHasNotBeenHit) {
                 _misses.push(coordinates);
-                console.log(coordinates)
-                console.log('attack missed');
             };
        };
     };
