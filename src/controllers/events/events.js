@@ -11,35 +11,40 @@ wrong.src = '../src/assets/sounds/wrong.mp3';
 typingSound.src = '../src/assets/sounds/type.mp3';
 attack.setAttribute('src', '../src/assets/sounds/attack.mp3');
 
-// Refactor
 const events = (event, game, Ship) => {
     typingSound.play();
     const item = event.target;
     let location = '';
 
-    if(item.matches('.start')) {
+    if (item.matches('.start')) {
         const input = document.querySelector('.input');
-        game.setState({setup: true, initial: false});
+        game.setState({
+            setup: true,
+            initial: false
+        });
         game.person.player.name = input.value || 'person';
         console.log(game.person.player.name)
         game.render('setup', '#content');
         display.disableGameboard();
     } else
 
-    if(item.matches('.submit_setup')){
-        game.setState({setup: false, game: true});
+    if (item.matches('.submit_setup')) {
+        game.setState({
+            setup: false,
+            game: true
+        });
         game.render('game', '#content');
         game.person.gameboard.render(
 
-            'gameboard', 
-            '.gameboard_two', 
-            true, 
+            'gameboard',
+            '.gameboard_two',
+            true,
             true
 
-            );
+        );
     } else
 
-    if(item.matches('.ship')) {
+    if (item.matches('.ship')) {
         length = parseInt(event.target.dataset.length);
         ship = game.person.gameboard.selectShip(event);
         shipPosition = display.setShipVertical();
@@ -48,53 +53,59 @@ const events = (event, game, Ship) => {
         console.log(ship)
     };
 
-    if(item.matches('.vertical_button')) {
+    if (item.matches('.vertical_button')) {
         shipPosition = display.setShipVertical();
     };
 
-    if(item.matches('.horizontal_button')) {
+    if (item.matches('.horizontal_button')) {
         shipPosition = display.setShipHorizontal();
     };
 
-    if(item.matches('.cell')) {
+    if (item.matches('.cell')) {
         location = [
-            parseInt(item.dataset.column), 
+            parseInt(item.dataset.column),
             parseInt(item.parentNode.dataset.row)
         ];
-        if(game.state.setup && ship) {
+        if (game.state.setup && ship) {
             const personGameboard = game.person.gameboard;
-            //refactor
-            if(!personGameboard.placeShip(Ship(length), location, shipPosition, length)) {
+            if (!personGameboard.placeShip(Ship(length), location, shipPosition, length)) {
 
                 wrong.currentTime = 0;
                 wrong.play();
             };
             personGameboard.componentRender('gameboardSetup', '.setup_container', '.gameboard_container', false, true);
             location = '';
-            if(personGameboard.isReady(personGameboard.ships)) {
-                display.enableSubmit(), 
-                display.showBoardReady(), 
-                attack.play();
+            if (personGameboard.isReady(personGameboard.ships)) {
+                display.enableSubmit(),
+                    display.showBoardReady(),
+                    attack.play();
             };
             display.disableGameboard();
         } else
-        if(game.state.game) {
+        if (game.state.game) {
             game.run(location);
         };
 
     };
 
-    if(item.matches('.reset_button')) {
+    if (item.matches('.reset_button')) {
         const name = game.person.player.name;
         game.initialize();
-        game.setState({setup: true, initial: false});
+        game.setState({
+            setup: true,
+            initial: false
+        });
         game.render('setup', '#content');
         game.person.player.name = name;
     };
 
-    if(item.matches('.end_game_button')) {
+    if (item.matches('.end_game_button')) {
         game.initialize();
-        game.setState({initial: true, setup: false, game: false})
+        game.setState({
+            initial: true,
+            setup: false,
+            game: false
+        })
         game.render('main', '#content');
     };
 
