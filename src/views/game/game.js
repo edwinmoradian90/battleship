@@ -13,8 +13,5 @@ gameboardOne.appendChild(gameboard.generate());
 gameboardTwo.appendChild(gameboard.generate(true).cloneNode(true));
 game.appendChild(gameboardOne);
 game.appendChild(gameboardTwo);
-//game.classList.add('crt');
 
 module.exports = game;
-
-

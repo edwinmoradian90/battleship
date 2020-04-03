@@ -1,70 +1,70 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-underscore-dangle */
 const arrays = require('../utility/arrays');
 
-const Player = (name, type, turn=false) => {
-    let _name = name;
-    let _turn = turn;
-    let _type = type;
-    let _moves = [];
-   
-    const swapTurns = () => {
-        _turn = _turn == true 
-            ? false
-            : true
-    };
+const Player = (name, type, turn = false) => {
+  let _name = name;
+  let _turn = turn;
+  let _type = type;
+  const _moves = [];
 
-    const moveIsLegal = (move) => {
-        for(array of _moves) {
-            if(arrays.match(move, array)) {
-                console.log('Oops! Position is taken!');
-                return false;
-            };
-        };
-        return true;
-    };
+  const swapTurns = () => {
+    _turn = _turn !== true;
+  };
 
-    const computerMove = () => {
-        return [arrays.rng(), arrays.rng()];
-    };
+  const moveIsLegal = (move) => {
+    for (array of _moves) {
+      if (arrays.match(move, array)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
-    const attack = (selected) => {
-        let move;
-        switch(_type){
-            case 'Person':
-                    _moves.push(selected);
-                    move = selected;
-                break;
-            case 'AI':
-                 _moves.push(computerMove);
-                 move = computerMove;
-                break;
-        }
-        return move;
-    };
+  const computerMove = () => [arrays.rng(), arrays.rng()];
 
-    return{
-        attack,
-        moveIsLegal,
-        computerMove,
-        swapTurns,
-        get name () {
-            return _name;
-        },
-        set name(name) {
-            _name = name;
-        },
-        get type() {
-            return _type;
-        },
-        set type(type) {
-            _type = type;
-        },
-        get turn() {
-            return _turn;
-        },
-        set turn(turn) {
-            _turn = turn;
-        },
-    };
+  const attack = (selected) => {
+    let move;
+    switch (_type) {
+      case 'Person':
+        _moves.push(selected);
+        move = selected;
+        break;
+      case 'AI':
+        _moves.push(computerMove);
+        move = computerMove;
+        break;
+      default:
+        break;
+    }
+    return move;
+  };
+
+  return {
+    attack,
+    moveIsLegal,
+    computerMove,
+    swapTurns,
+    get name() {
+      return _name;
+    },
+    set name(userName) {
+      _name = userName;
+    },
+    get type() {
+      return _type;
+    },
+    set type(userType) {
+      _type = userType;
+    },
+    get turn() {
+      return _turn;
+    },
+    set turn(playerTurn) {
+      _turn = playerTurn;
+    },
+  };
 };
 
 module.exports = Player;

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
 const Gameboard = require('./gameboard/gameboard');
 const Player = require('./player/player');
 const Ship = require('./ship/ship');
@@ -8,163 +10,144 @@ const typingSound = document.createElement('audio');
 typingSound.src = '../src/assets/sounds/type.mp3';
 
 const game = () => {
+  const person = {
+    player: '',
+    gameboard: '',
+  };
 
-    let person = {
-        player: '',
-        gameboard: '',
-    };
+  const computer = {
+    player: '',
+    gameboard: '',
+  };
 
-    let computer = {
-        player: '',
-        gameboard: '',
-    };
-    
-    // Game phase
-    let state = {
-        initial: true,
-        setup: false,
-        game: false,
-        end: false
-    };
+  // Game phase
+  const state = {
+    initial: true,
+    setup: false,
+    game: false,
+    end: false,
+  };
 
-    const _setComputerBoard = () => {
-        const shipPositions = ['horizontal', 'vertical'];
-        let shipSize = [2, 3, 3, 4, 5];
-            for(let i=0; i<5; i++) {
-                let boardLocation;
-                const position = shipPositions[arrays.rng(1)]
-                console.log(position)
-                if(position == 'horizontal') {
-                    boardLocation = [arrays.rng(9 - shipSize[i]), i];
-                } else {
-                    boardLocation = [i, arrays.rng(9 - shipSize[i])];
-                };
+  const _setComputerBoard = () => {
+    const shipPositions = ['horizontal', 'vertical'];
+    const shipSize = [2, 3, 3, 4, 5];
+    for (let i = 0; i < 5; i += 1) {
+      let boardLocation;
+      const position = shipPositions[arrays.rng(1)];
+      if (position === 'horizontal') {
+        boardLocation = [arrays.rng(9 - shipSize[i]), i];
+      } else {
+        boardLocation = [i, arrays.rng(9 - shipSize[i])];
+      }
 
-                    let placedShip = 
-                    computer
-                        .gameboard
-                        .placeShip(Ship(shipSize[i]), boardLocation, position, shipSize[i]);
-                        console.log(computer.gameboard.ships.length )
-                
-                placedShip == false ? i-- : null;
-            };
-    };
+      const placedShip = computer
+        .gameboard
+        .placeShip(Ship(shipSize[i]), boardLocation, position, shipSize[i]);
 
-    const initialize = () => {
+      placedShip === false ? i = -1 : null;
+    }
+  };
 
-        person.player = Player('Person', 'Person', true);
-        person.gameboard = Gameboard();
+  const initialize = () => {
+    person.player = Player('Person', 'Person', true);
+    person.gameboard = Gameboard();
 
-        computer.player = Player('AI','AI', false );
-        computer.gameboard = Gameboard();
+    computer.player = Player('AI', 'AI', false);
+    computer.gameboard = Gameboard();
 
-        _setComputerBoard();
-    };
-    // for refactor
-    const render = (view, identifier, disabled) => {
-        display.clearAll(identifier);
-        display.set(view, identifier, disabled);
-    };
-    // for refactor
-    const _checkWinCondition = identifier => {
-        if(identifier.gameboard.allSunk()){
-            render('gameover', '#content', false);
-            setState({game: false, end: true})
-            display.showWinner(_getWinner());
-        };
-    };
+    _setComputerBoard();
+  };
+  const render = (view, identifier, disabled) => {
+    display.clearAll(identifier);
+    display.set(view, identifier, disabled);
+  };
 
-    const _getWinner = () => {
-        const computerTurn = computer.player.turn;
-        let winner;
-        if(computerTurn) {
-            winner = computer;
-        };
-        
-        winner = person.player.name;
-
-        return winner;
+  const _getWinner = () => {
+    const computerTurn = computer.player.turn;
+    let winner;
+    if (computerTurn) {
+      winner = computer;
     }
 
-    const setState = (object) => {
-        Object.assign(state, object);
-    };
+    winner = person.player.name;
 
-    const _playerOneMove = (event) => {
-    console.log(computer.gameboard.ships)
+    return winner;
+  };
 
-        if(!person.player.moveIsLegal(event)) return;
+  const setState = (object) => {
+    Object.assign(state, object);
+  };
 
-        const attack = person.player.attack(event)
-        computer.gameboard.receiveAttack(attack);
+  const _checkWinCondition = (identifier) => {
+    if (identifier.gameboard.allSunk()) {
+      render('gameover', '#content', false);
+      setState({ game: false, end: true });
+      display.showWinner(_getWinner());
+    }
+  };
 
-        person.player.turn = false;
-        computer.player.turn = true;
+  const _playerOneMove = (event) => {
+    if (!person.player.moveIsLegal(event)) return;
 
-        computer.gameboard.render('gameboard', '.gameboard_one', false, true);
-    };
+    const attack = person.player.attack(event);
+    computer.gameboard.receiveAttack(attack);
 
-    const _playerTwoMove = () => {
-        console.log(computer.gameboard.ships.length)
-        
-        computer.gameboard.pause('computer', true, false);
-        // Setting Time out to make computer feel more human.
-        setTimeout(() => {
-            
-            let computerMove = computer.player.computerMove();
+    person.player.turn = false;
+    computer.player.turn = true;
 
-            while(!computer.player.moveIsLegal(computerMove)) {
-                computerMove = computer.player.computerMove();
-            };
+    computer.gameboard.render('gameboard', '.gameboard_one', false, true);
+  };
 
-            console.log(computerMove);
-            computer.player.attack(computerMove);
-            person.gameboard.receiveAttack(computerMove);
-            person.gameboard.render('gameboard', '.gameboard_two', true, true);
-            typingSound.play();
+  const _playerTwoMove = () => {
+    computer.gameboard.pause('computer', true, false);
+    // Setting Time out to make computer feel more human.
+    setTimeout(() => {
+      let computerMove = computer.player.computerMove();
 
-            computer.player.turn = false;
-            person.player.turn = true;
+      while (!computer.player.moveIsLegal(computerMove)) {
+        computerMove = computer.player.computerMove();
+      }
 
-            computer.gameboard.pause('computer', false, false);
+      computer.player.attack(computerMove);
+      person.gameboard.receiveAttack(computerMove);
+      person.gameboard.render('gameboard', '.gameboard_two', true, true);
+      typingSound.play();
 
-        }, 3000);
-            
-    };
+      computer.player.turn = false;
+      person.player.turn = true;
 
-// board one = computer board
-// board two = person board
-    const run = (event) => {
+      computer.gameboard.pause('computer', false, false);
+    }, 1000);
+  };
 
-        // Person Turn
-        if(person.player.turn) {
-            _playerOneMove(event);
-        };
+  const run = (event) => {
+    if (person.player.turn) {
+      _playerOneMove(event);
+    }
 
-        _checkWinCondition(computer);
+    _checkWinCondition(computer);
 
-        if(computer.gameboard.allSunk()){
-            return;
-        };
+    if (computer.gameboard.allSunk()) {
+      return;
+    }
 
-        // Check Turn
-        if(computer.player.turn) {
-            _playerTwoMove(event);
-        };
+    // Check Turn
+    if (computer.player.turn) {
+      _playerTwoMove(event);
+    }
 
-        _checkWinCondition(person);
+    _checkWinCondition(person);
+  };
 
-    };
-
-    return {
-        run,
-        render,
-        person,
-        computer,
-        state,
-        setState,
-        initialize,
-    };
+  return {
+    run,
+    render,
+    person,
+    computer,
+    state,
+    setState,
+    initialize,
+  };
 };
 
 module.exports = game;
