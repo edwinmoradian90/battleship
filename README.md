@@ -1,7 +1,7 @@
 # BattleShip JS
 
 Battle ship built with javascript.
-(View here)[https://raw.githack.com/edwinmoradian90/battleship/development/dist/index.html]
+![View here](https://raw.githack.com/edwinmoradian90/battleship/development/dist/index.html)
 
 ## Getting Started
 
