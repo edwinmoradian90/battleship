@@ -1,7 +1,9 @@
 # BattleShip JS
 
-Battle ship built with JavaScript.
-![View here](https://raw.githack.com/edwinmoradian90/battleship/development/dist/index.html)
+Battle ship game built with JavaScript.
+[View here](https://raw.githack.com/edwinmoradian90/battleship/development/dist/index.html)
+
+![setting-ships](./src/assets/images/screenshots/battleship-game.png)
 
 ## Getting Started
 
