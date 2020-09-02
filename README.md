@@ -22,7 +22,7 @@ then open your browser to the specified localhost.
 
 ## Author
 
-[Edwin Moradian](https://github.com/PurpleBooth)
+**Edwin Moradian** [Github](https://github.com/edwinmoradian90) | [LinkedIn](https://linkedin.com/in/edwin-moradian) | [Portfolio](https://edwin-moradian.firebaseapp.com)
 
 ## License
 
